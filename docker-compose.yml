@@ -12,3 +12,5 @@ services:
     container_name: cinerex_db
     volumes:
       - ./postgres-cinerex:/var/lib/postgresql/data
+env_file:
+  - .env

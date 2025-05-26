@@ -1,4 +1,5 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { FunctionEntity} from "src/functions/entities/function.entity";
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity()
 export class Movie {
@@ -12,4 +13,7 @@ export class Movie {
      duration: number;
      @Column({nullable: true})
      imageUrl: string;
+
+     @OneToMany(()=> FunctionEntity, (functions)=> functions.movie)
+     functions: FunctionEntity[];
 }

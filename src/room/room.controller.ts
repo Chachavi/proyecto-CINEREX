@@ -19,16 +19,16 @@ export class RoomController {
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.roomService.findOne(+id);
+    return this.roomService.findOne(id);
   }
 
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateRoomDto: UpdateRoomDto) {
-    return this.roomService.update(+id, updateRoomDto);
+    return this.roomService.update(id, updateRoomDto);
   }
 
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return this.roomService.remove(+id);
+    return this.roomService.remove(id);
   }
 }

@@ -33,7 +33,7 @@ export class MoviesService {
       movieId: id,
       ...updateMovieDto
     });
-    if (!movieToUpdate) throw new NotFoundException()
+    if (!movieToUpdate) throw new NotFoundException(`Movie with ${id} not found`)
       return this.movieRepository.save(movieToUpdate)
   }
 
@@ -42,7 +42,7 @@ export class MoviesService {
       movieId: id
     });
     if (!movie) throw new NotFoundException(`Movie with id ${id} not found`)
-      return movie;
+      return `Movie with id ${id} successfully deleted`;
   }
 
 }

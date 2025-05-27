@@ -1,6 +1,7 @@
 import { Movie } from "src/movies/entities/movie.entity";
 import { Room } from "src/room/entities/room.entity";
-import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Ticket } from "src/tickets/entities/ticket.entity";
+import { Column, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity()
 export class FunctionEntity {
@@ -21,4 +22,7 @@ export class FunctionEntity {
 
     @Column()
     startTime: Date;
+
+    @OneToMany(()=> Ticket, (ticket)=> ticket.function)
+    tickets: Ticket[];
 }

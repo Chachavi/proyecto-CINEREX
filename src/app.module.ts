@@ -5,6 +5,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { MoviesModule } from './movies/movies.module';
 import { RoomModule } from './room/room.module';
 import { FunctionsModule } from './functions/functions.module';
+import { TicketsModule } from './tickets/tickets.module';
 
 @Module({
   imports: [TypeOrmModule.forRoot({
@@ -17,7 +18,7 @@ import { FunctionsModule } from './functions/functions.module';
     entities: [],
     autoLoadEntities: true,
     synchronize: true,
-  }), MoviesModule, RoomModule, FunctionsModule],
+  }), MoviesModule, RoomModule, FunctionsModule, TicketsModule],
   controllers: [AppController],
   providers: [AppService],
 })

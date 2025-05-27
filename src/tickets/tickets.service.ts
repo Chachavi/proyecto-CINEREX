@@ -69,4 +69,21 @@ async create(createTicketDto: CreateTicketDto){
     return `Ticket with id ${id} successfully deleted`
   }
 
+  async confirmTicket(id: string) {
+  const ticket = await this.ticketRepository.findOne({
+    where: { ticketId: id },
+  });
+
+  if (!ticket) {
+    throw new NotFoundException('Ticket not found');
+  }
+
+  if (ticket.status === 'confirmed') {
+    throw new BadRequestException('The ticket is already confirmed');
+  }
+
+  ticket.status = 'confirmed';
+  return this.ticketRepository.save(ticket);
+}
+
 }

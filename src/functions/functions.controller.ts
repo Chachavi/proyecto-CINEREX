@@ -31,4 +31,10 @@ export class FunctionsController {
   remove(@Param('id') id: string) {
     return this.functionsService.remove(id);
   }
+
+  @Get(':id/seats')
+getAvailability(@Param('id') id: string) {
+  return this.functionsService.getSeatAvailability(id);
+}
+
 }

@@ -27,6 +27,12 @@ export class TicketsController {
     return this.ticketsService.update(id, updateTicketDto);
   }
 
+  @Patch(':id/confirm')
+  confirmTicket(@Param('id') id: string) {
+    return this.ticketsService.confirmTicket(id);
+}
+
+
   @Delete(':id')
   remove(@Param('id') id: string) {
     return this.ticketsService.remove(id);

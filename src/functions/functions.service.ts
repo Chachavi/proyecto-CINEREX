@@ -90,4 +90,22 @@ export class FunctionsService {
     if(!func) throw new NotFoundException(`Function with id ${id} not found`)
       return `Function with id ${id} successfully deleted`
   }
+
+  async getSeatAvailability(functionId: string) {
+  const func = await this.functionRepository.findOne({
+    where: { functionId },
+    relations: ['room', 'tickets'],
+  });
+
+  if (!func) throw new NotFoundException('Function not found');
+
+  const totalSeats = func.room.capacity;
+  const reservedSeats = func.tickets.map((ticket) => ticket.seat);
+
+  return {
+    functionId,
+    totalSeats,
+    reservedSeats,
+    };
+  }
 }

@@ -6,6 +6,8 @@ import { MoviesModule } from './movies/movies.module';
 import { RoomModule } from './room/room.module';
 import { FunctionsModule } from './functions/functions.module';
 import { TicketsModule } from './tickets/tickets.module';
+import { UsersModule } from './users/users.module';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [TypeOrmModule.forRoot({
@@ -18,7 +20,7 @@ import { TicketsModule } from './tickets/tickets.module';
     entities: [],
     autoLoadEntities: true,
     synchronize: true,
-  }), MoviesModule, RoomModule, FunctionsModule, TicketsModule],
+  }), MoviesModule, RoomModule, FunctionsModule, TicketsModule, UsersModule, AuthModule],
   controllers: [AppController],
   providers: [AppService],
 })

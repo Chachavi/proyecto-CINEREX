@@ -12,4 +12,8 @@ export class CreateTicketDto {
     @IsOptional()
     @IsIn(['confirmed', 'reserved'])
     status: string;
+
+    @IsUUID()
+    @IsNotEmpty()
+    userId: string;
 }

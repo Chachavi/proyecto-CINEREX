@@ -2,6 +2,8 @@ import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/commo
 import { TicketsService } from './tickets.service';
 import { CreateTicketDto } from './dto/create-ticket.dto';
 import { UpdateTicketDto } from './dto/update-ticket.dto';
+import { UseGuards } from '@nestjs/common';
+import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 
 @Controller('tickets')
 export class TicketsController {
@@ -11,6 +13,12 @@ export class TicketsController {
   create(@Body() createTicketDto: CreateTicketDto) {
     return this.ticketsService.create(createTicketDto);
   }
+
+@UseGuards(JwtAuthGuard)
+  @Get('history')
+getAllHistory() {
+  return this.ticketsService.getAllTicketsHIstory();
+}
 
   @Get()
   findAll() {
@@ -31,7 +39,6 @@ export class TicketsController {
   confirmTicket(@Param('id') id: string) {
     return this.ticketsService.confirmTicket(id);
 }
-
 
   @Delete(':id')
   remove(@Param('id') id: string) {

@@ -1,5 +1,6 @@
 import { FunctionEntity } from "src/functions/entities/function.entity";
 import { Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import { User } from "src/users/entities/user.entity";
 
 @Entity()
 export class Ticket {
@@ -11,6 +12,10 @@ export class Ticket {
         name: 'functionId'
     })
     function: FunctionEntity;
+
+    @ManyToOne(() => User, (user) => user.tickets, { eager: true }) 
+    @JoinColumn({ name: 'userId' })
+    user: User;
 
     @Column()
     seat: string;

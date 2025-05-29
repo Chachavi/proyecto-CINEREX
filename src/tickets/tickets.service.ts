@@ -5,6 +5,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Ticket } from './entities/ticket.entity';
 import { Repository } from 'typeorm';
 import { FunctionEntity } from 'src/functions/entities/function.entity';
+import { User } from 'src/users/entities/user.entity';
 
 @Injectable()
 export class TicketsService {
@@ -12,33 +13,40 @@ export class TicketsService {
     @InjectRepository(Ticket)
     private ticketRepository: Repository<Ticket>,
     @InjectRepository(FunctionEntity)
-    private functionRepository: Repository<FunctionEntity>
+    private functionRepository: Repository<FunctionEntity>,
+    @InjectRepository(User)
+    private userRepository: Repository<User>
 ){}
 
-async create(createTicketDto: CreateTicketDto){
-  // Verificar que la función existe
+async create(createTicketDto: CreateTicketDto) {
   const func = await this.functionRepository.findOne({
-    where: {functionId: createTicketDto.functionId},
+    where: { functionId: createTicketDto.functionId },
   });
   if (!func) throw new NotFoundException('Function not found');
 
-    // Verificar asientos disponibles
+  const user = await this.userRepository.findOneBy({ userId: createTicketDto.userId });
+  if (!user) throw new NotFoundException('User not found');
+
   const existingTicket = await this.ticketRepository.findOne({
     where: {
-    seat: createTicketDto.seat, 
-    function: {functionId: createTicketDto.functionId}
+      seat: createTicketDto.seat,
+      function: { functionId: createTicketDto.functionId },
     },
   });
   if (existingTicket) {
     throw new BadRequestException('That seat has been already taken');
-    }
-  // Crear y guardar ticket
+  }
+
   const ticket = this.ticketRepository.create({
     seat: createTicketDto.seat,
+    status: createTicketDto.status ?? 'reserved',
     function: func,
+    user: user,
   });
+
   return this.ticketRepository.save(ticket);
-  }
+}
+
 
   findAll(){
   return this.ticketRepository.find()
@@ -84,6 +92,13 @@ async create(createTicketDto: CreateTicketDto){
 
   ticket.status = 'confirmed';
   return this.ticketRepository.save(ticket);
+}
+
+async getAllTicketsHIstory() {
+  return this.ticketRepository.find({
+    relations: ['user', 'function', 'function.movie', 'function.room'],
+    order: {createdAt: 'DESC'},
+  });
 }
 
 }

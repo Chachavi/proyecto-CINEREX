@@ -94,10 +94,18 @@ async create(createTicketDto: CreateTicketDto) {
   return this.ticketRepository.save(ticket);
 }
 
-async getAllTicketsHIstory() {
+async getAllTicketsHistory() {
   return this.ticketRepository.find({
     relations: ['user', 'function', 'function.movie', 'function.room'],
     order: {createdAt: 'DESC'},
+  });
+}
+
+async getAllTicketsHistoryByUser(id: string) {
+  return this.ticketRepository.find({
+    where: { user: { userId: id } },
+    relations: ['user', 'function', 'function.movie', 'function.room'],
+    order: { createdAt: 'DESC' },
   });
 }
 

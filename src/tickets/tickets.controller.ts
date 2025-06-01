@@ -4,6 +4,8 @@ import { CreateTicketDto } from './dto/create-ticket.dto';
 import { UpdateTicketDto } from './dto/update-ticket.dto';
 import { UseGuards } from '@nestjs/common';
 import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
+import { RolesGuard } from 'src/auth/roles.guard';
+import { Roles } from 'src/auth/roles.decorator';
 
 @Controller('tickets')
 export class TicketsController {
@@ -14,8 +16,9 @@ export class TicketsController {
     return this.ticketsService.create(createTicketDto);
   }
 
-@UseGuards(JwtAuthGuard)
+@UseGuards(JwtAuthGuard, RolesGuard)
   @Get('history')
+  @Roles('admin')
 getAllHistory() {
   return this.ticketsService.getAllTicketsHIstory();
 }

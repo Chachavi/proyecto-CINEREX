@@ -8,16 +8,13 @@ import { FunctionsModule } from './functions/functions.module';
 import { TicketsModule } from './tickets/tickets.module';
 import { UsersModule } from './users/users.module';
 import { AuthModule } from './auth/auth.module';
+import { ConfigModule } from '@nestjs/config';
 
 @Module({
-  imports: [TypeOrmModule.forRoot({
+  imports: [ConfigModule.forRoot({ isGlobal: true }),
+    TypeOrmModule.forRoot({
     type: 'postgres',
-    host: 'localhost',
-    port: 5433,
-    username: 'postgres',
-    password: 'hola',
-    database: 'cinerex_db',
-    entities: [],
+    url: process.env.DATABASE_URL,
     autoLoadEntities: true,
     synchronize: true,
   }), MoviesModule, RoomModule, FunctionsModule, TicketsModule, UsersModule, AuthModule],

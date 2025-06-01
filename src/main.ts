@@ -12,3 +12,5 @@ async function bootstrap() {
   await app.listen(4000);
 }
 bootstrap();
+
+console.log('URL DB:', process.env.DATABASE_URL);

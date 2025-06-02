@@ -53,7 +53,6 @@ export class MoviesController {
     return this.moviesService.remove(id);
   }
 
-  // 🚀 Nueva ruta para subir imagen
   @UseGuards(JwtAuthGuard, RolesGuard)
   @Roles('admin')
   @Post(':id/upload')

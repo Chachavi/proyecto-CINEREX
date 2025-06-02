@@ -1,11 +1,22 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {Controller, Get, Post, Body, Patch, Param, Delete, UploadedFile, UseInterceptors, UseGuards } from '@nestjs/common';
 import { MoviesService } from './movies.service';
 import { CreateMovieDto } from './dto/create-movie.dto';
 import { UpdateMovieDto } from './dto/update-movie.dto';
-import { UseGuards } from '@nestjs/common';
 import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 import { RolesGuard } from 'src/auth/roles.guard';
 import { Roles } from 'src/auth/roles.decorator';
+import { FileInterceptor } from '@nestjs/platform-express';
+import { diskStorage } from 'multer';
+import { extname } from 'path';
+
+const storage = diskStorage({
+  destination: './fotosmovies',
+  filename: (req, file, cb) => {
+    const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1e9);
+    const ext = extname(file.originalname);
+    cb(null, `${file.fieldname}-${uniqueSuffix}${ext}`);
+  },
+});
 
 @Controller('movies')
 export class MoviesController {
@@ -41,5 +52,17 @@ export class MoviesController {
   remove(@Param('id') id: string) {
     return this.moviesService.remove(id);
   }
-  
+
+  // 🚀 Nueva ruta para subir imagen
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Roles('admin')
+  @Post(':id/upload')
+  @UseInterceptors(FileInterceptor('file', { storage }))
+  async uploadImage(
+    @Param('id') id: string,
+    @UploadedFile() file: Express.Multer.File
+  ) {
+    const imageUrl = `fotosmovies/${file.filename}`;
+    return this.moviesService.update(id, { imageUrl });
+  }
 }

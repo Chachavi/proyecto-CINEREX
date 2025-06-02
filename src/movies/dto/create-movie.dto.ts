@@ -1,5 +1,4 @@
-import { IsNotEmpty, IsString, IsInt, MaxLength, IsOptional, IsUrl } from "class-validator";
-import { Movie } from "../entities/movie.entity";
+import { IsNotEmpty, IsString, IsInt, MaxLength, IsOptional } from "class-validator";
 
 export class CreateMovieDto{
     @IsString()
@@ -13,6 +12,6 @@ export class CreateMovieDto{
     @IsNotEmpty()
     duration: number;
     @IsOptional()
-    @IsUrl()
+    @IsString()
     imageUrl: string;
 }

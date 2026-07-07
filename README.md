@@ -1,107 +1,112 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
-</p>
+﻿# CINEREX Backend
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+A NestJS backend service for the CINEREX cinema ticketing platform.
+This service provides authentication, movie listings, cinema rooms, functions, ticket handling, and static media delivery.
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+## 🚀 Features
 
-## Description
+- JWT authentication and role-based access control
+- Users, movies, rooms, functions, and tickets APIs
+- Request validation with NestJS `ValidationPipe`
+- Static file serving from `fotosmovies/`
+- PostgreSQL connection using `DATABASE_URL`
+- CORS support via `FRONTEND_URL`
+- Local development with Docker Compose
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+## 🧱 Tech stack
 
-## Project setup
+- Node.js 18
+- NestJS 11
+- TypeScript
+- TypeORM
+- PostgreSQL 14
+- Jest + Supertest
+- Docker Compose
 
-```bash
-$ npm install
-```
+## 📂 Project structure
 
-## Compile and run the project
+- `src/` — application source code
+- `src/auth/` — authentication, JWT strategy, guards, decorators
+- `src/movies/`, `src/room/`, `src/functions/`, `src/tickets/`, `src/users/` — domain modules
+- `fotosmovies/` — static assets served by the app
+- `dockerfile` — service container build instructions
+- `docker-compose.yml` — local development stack
+- `.env` — environment variables
 
-```bash
-# development
-$ npm run start
-
-# watch mode
-$ npm run start:dev
-
-# production mode
-$ npm run start:prod
-```
-
-## Run tests
+## ⚡ Quick start
 
 ```bash
-# unit tests
-$ npm run test
-
-# e2e tests
-$ npm run test:e2e
-
-# test coverage
-$ npm run test:cov
+cd backend
+npm install
+cp .env.example .env # or create .env manually
+npm run start:dev
 ```
 
-## Deployment
+Open the API at `http://localhost:4000`.
 
-When you're ready to deploy your NestJS application to production, there are some key steps you can take to ensure it runs as efficiently as possible. Check out the [deployment documentation](https://docs.nestjs.com/deployment) for more information.
-
-If you are looking for a cloud-based platform to deploy your NestJS application, check out [Mau](https://mau.nestjs.com), our official platform for deploying NestJS applications on AWS. Mau makes deployment straightforward and fast, requiring just a few simple steps:
+## 🐳 Run with Docker Compose
 
 ```bash
-$ npm install -g mau
-$ mau deploy
+docker compose up -d
 ```
 
-With Mau, you can deploy your application in just a few clicks, allowing you to focus on building features rather than managing infrastructure.
+This starts:
+- `db_cinerex` — PostgreSQL database
+- `backend` — NestJS application
 
-## Resources
+The backend listens on `http://localhost:4000` and the DB is exposed on host port `5433`.
 
-Check out a few resources that may come in handy when working with NestJS:
+## 🔧 Environment variables
 
-- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
-- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
-- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
-- Deploy your application to AWS with the help of [NestJS Mau](https://mau.nestjs.com) in just a few clicks.
-- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
-- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
-- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
-- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
+Create a `.env` file with values like this:
 
-## Support
-
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
-
-## Stay in touch
-
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
-
-## License
-
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
-
-## Dotenv
-
+```env
 DB_USER=postgres
 DB_PASSWORD=anaya
 DATABASE=cinerex-db
 DATABASE_URL=postgres://postgres:anaya@db_cinerex:5432/cinerex-db
 JWT_SECRET=jwt-secret
+FRONTEND_URL=
+```
+
+### Notes
+
+- `DATABASE_URL` is required by TypeORM to connect to the database.
+- `FRONTEND_URL` enables CORS for the frontend.
+
+## 📦 npm scripts
+
+- `npm install` — install dependencies
+- `npm run start` — start the API
+- `npm run start:dev` — start in watch mode
+- `npm run start:prod` — run compiled production code
+- `npm run build` — compile TypeScript
+- `npm run lint` — lint source files
+- `npm run format` — format code with Prettier
+- `npm run test` — run unit tests
+- `npm run test:e2e` — run end-to-end tests
+- `npm run test:cov` — generate coverage report
+
+## 🌐 Runtime behavior
+
+- Serves static assets from the `fotosmovies/` folder at `/fotosmovies/`
+- Listens on port `4000`
+- Uses `wait-for-it.sh` in Docker to wait for the database before starting
+- Logs `DATABASE_URL` on startup for debugging
+
+## ✅ Contributing
+
+- Keep feature logic inside the appropriate module folder
+- Use DTOs and `ValidationPipe` for request validation
+- Add tests for new routes and behaviors
+- Keep `.env` secrets out of source control
+
+## 📚 Helpful links
+
+- [NestJS Documentation](https://docs.nestjs.com)
+- [TypeORM Documentation](https://typeorm.io)
+- [PostgreSQL Docker image](https://hub.docker.com/_/postgres)
+
+---
+
+_This README is custom-built for the CINEREX backend service._
